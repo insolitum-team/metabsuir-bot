@@ -1,4 +1,7 @@
 import logging
+
+import requests
+
 import config
 
 from aiogram import Bot, Dispatcher, executor, types
@@ -16,6 +19,10 @@ dp = Dispatcher(bot)
 async def send_welcome(message: types.Message):
     user_id = message.get_args()
     chat_id = message.chat.id
+    response = requests.post(
+        url=f"http://127.0.0.1:8000/profile/get-chat-id?user_id={user_id}&chat_id={chat_id}"
+    )
+    print(response)
     await message.reply(f"User_id: {user_id}\nChat_id: {chat_id}")
 
 
